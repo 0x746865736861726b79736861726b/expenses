@@ -116,7 +116,7 @@ Retrieve a single expense by its ID.
 This endpoint retrieves the details of an expense by its unique ID.
 #### Request Example:
 ```bash
-GET /api/expenses/23e4567-e89b-12d3-a456-426614174000/
+GET /api/23e4567-e89b-12d3-a456-426614174000/
 ```
 #### Response Example:
 ```bash
