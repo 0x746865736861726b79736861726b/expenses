@@ -17,6 +17,185 @@ Run migrations:
 
 ## Expenses API
 
+### `GET /api/`
+Retrieve a list of all expenses.
+
+#### Description:
+This endpoint returns all expenses from the database.
+
+#### Request Example:
+```bash
+GET /api/
+
+[
+  {
+    "id": 1,
+    "user": "123e4567-e89b-12d3-a456-426614174000",
+    "title": "Rent",
+    "amount": 1200.00,
+    "date": "2024-01-15",
+    "category": "Housing"
+  },
+  {
+    "id": 2,
+    "user": "123e4567-e89b-12d3-a456-426614174000",
+    "title": "Groceries",
+    "amount": 150.00,
+    "date": "2024-01-20",
+    "category": "Food"
+  }
+]
+
+```
+#### Response Example:
+```bash
+[
+  {
+    "id": 1,
+    "user": "123e4567-e89b-12d3-a456-426614174000",
+    "title": "Rent",
+    "amount": 1200.00,
+    "date": "2024-01-15",
+    "category": "Housing"
+  },
+  {
+    "id": 2,
+    "user": "123e4567-e89b-12d3-a456-426614174000",
+    "title": "Groceries",
+    "amount": 150.00,
+    "date": "2024-01-20",
+    "category": "Food"
+  }
+]
+```
+#### Possible Errors:
+
+- 400 Bad Request — Invalid query parameters or filters.
+- 500 Internal Server Error — Unexpected error on the server.
+
+### POST /api/expenses/
+
+Create a new expense.
+### Description:
+
+This endpoint allows you to create a new expense.
+#### Request Body:
+```bash
+{
+  "user": "123e4567-e89b-12d3-a456-426614174000",
+  "title": "Rent",
+  "amount": 1200.00,
+  "date": "2024-01-15",
+  "category": "Housing"
+}
+
+```
+#### Response Example:
+
+```bash
+{
+  "id": 1,
+  "user": "123e4567-e89b-12d3-a456-426614174000",
+  "title": "Rent",
+  "amount": 1200.00,
+  "date": "2024-01-15",
+  "category": "Housing"
+}
+
+```
+#### Possible Errors:
+
+ - 400 Bad Request — Invalid or missing fields in the request.
+ - 422 Unprocessable Entity — Validation errors.
+
+### `GET /api/expenses/{id}/`
+
+Retrieve a single expense by its ID.
+### Description:
+
+This endpoint retrieves the details of an expense by its unique ID.
+#### Request Example:
+```bash
+GET /api/expenses/23e4567-e89b-12d3-a456-426614174000/
+```
+#### Response Example:
+```bash
+{
+  "id": 1,
+  "user": "123e4567-e89b-12d3-a456-426614174000",
+  "title": "Rent",
+  "amount": 1200.00,
+  "date": "2024-01-15",
+  "category": "Housing"
+}
+
+```
+#### Possible Errors:
+ - 404 Not Found — Expense with the given ID does not exist.
+
+### `PUT /api/expenses/{id}/`
+
+Update an existing expense by its ID.
+### Description:
+
+This endpoint allows you to update an existing expense.
+#### Request Body:
+```bash
+{
+  "user": "123e4567-e89b-12d3-a456-426614174000",
+  "title": "Updated Rent",
+  "amount": 1300.00,
+  "date": "2024-01-16",
+  "category": "Housing"
+}
+
+```
+#### Response Body:
+```bash
+{
+  "id": 1,
+  "user": "123e4567-e89b-12d3-a456-426614174000",
+  "title": "Updated Rent",
+  "amount": 1300.00,
+  "date": "2024-01-16",
+  "category": "Housing"
+}
+
+```
+#### Possible Errors:
+
+ - 400 Bad Request — Invalid or missing fields in the request.
+ - 404 Not Found — Expense with the given ID does not exist.
+
+### `PATCH /api/expenses/{id}/`
+
+Partially update an existing expense by its ID.
+### Description:
+
+This endpoint allows you to partially update an existing expense (only fields that are provided in the request will be updated).
+#### Request Body:
+```bash
+{
+  "amount": 1400.00
+}
+
+```
+#### Response Body:
+```bash
+{
+  "id": 1,
+  "user": "123e4567-e89b-12d3-a456-426614174000",
+  "title": "Rent",
+  "amount": 1400.00,
+  "date": "2024-01-15",
+  "category": "Housing"
+}
+
+```
+#### Possible Errors:
+
+ - 400 Bad Request — Invalid or missing fields in the request.
+ - 404 Not Found — Expense with the given ID does not exist.
 ### `POST /api/filter/`
 Filter expenses by `user_id` and date range.
 
@@ -104,3 +283,5 @@ Content-Type: application/json
 
  - 400 Bad Request — Invalid request parameters or validation errors.
  - 404 Not Found — User or expense category not found.
+
+ ## Or via swagger endpoint `/docs/`
