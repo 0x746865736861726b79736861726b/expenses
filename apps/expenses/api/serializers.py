@@ -1,23 +1,10 @@
 import uuid
 
 from rest_framework import serializers
-from django.core.exceptions import ValidationError
 
 from ..models import Expenses
 from ..selectors.expenses import ExpensesSelector
-
-
-def validate_uuid4(value):
-    """
-    Validate that the provided value is a valid UUID4.
-    """
-    try:
-        val = uuid.UUID(str(value), version=4)
-    except ValueError:
-        raise ValidationError("Invalid UUID format. Must be a valid UUID4.")
-    if str(val) != str(value):
-        raise ValidationError("Invalid UUID4 value.")
-    return value
+from .validators import validate_uuid4, validate_user_exists
 
 
 class ExpensesSerializer(serializers.ModelSerializer):
@@ -35,7 +22,9 @@ class ExpensesSerializer(serializers.ModelSerializer):
 
 
 class ExpenseFilterSerializer(serializers.Serializer):
-    user_id = serializers.UUIDField(required=True, validators=[validate_uuid4])
+    user_id = serializers.UUIDField(
+        required=True, validators=[validate_uuid4, validate_user_exists]
+    )
     start_date = serializers.DateField(required=True, format="%Y-%m-%d")
     end_date = serializers.DateField(required=True, format="%Y-%m-%d")
 
@@ -64,7 +53,9 @@ class ExpenseFilterSerializer(serializers.Serializer):
 
 
 class ExpensesSummarySerializer(serializers.Serializer):
-    user_id = serializers.UUIDField(required=True, validators=[validate_uuid4])
+    user_id = serializers.UUIDField(
+        required=True, validators=[validate_uuid4, validate_user_exists]
+    )
     month = serializers.IntegerField(required=True, min_value=1, max_value=12)
 
     class Meta:
