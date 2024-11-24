@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 
 from ..models import Expenses
 from .serializers import (
@@ -15,6 +16,7 @@ from .serializers import (
 class ExpensesViewSet(ModelViewSet):
     queryset = Expenses.objects.select_related("user").all()
     serializer_class = ExpensesSerializer
+    permission_classes = [AllowAny]
 
     def get_serializer_class(self):
         """

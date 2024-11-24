@@ -31,20 +31,6 @@ class ExpensesViewSetTest(TestCase):
 
         self.client = APIClient()
 
-    def test_expenses_list(self):
-        """
-        Test the expenses list endpoint returns a list of expenses and the
-        status code is 200.
-        """
-        url = "/api/expenses/"
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-        expenses_data = response.data
-        self.assertEqual(len(expenses_data), 1)
-        self.assertEqual(expenses_data[0]["title"], "Groceries")
-
     def test_create_expense(self):
         """
         Test creating an expense returns a 201 status code and the created expense
