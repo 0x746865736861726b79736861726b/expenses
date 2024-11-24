@@ -10,6 +10,14 @@ from expenses.selectors.expenses import ExpensesSelector
 
 class ExpensesSelectorTest(TestCase):
     def setUp(self):
+        """
+        Create a test user and three expenses for that user.
+
+        The three expenses are:
+        - Groceries (Food, 50.00, 2024-11-01)
+        - Transport (Travel, 20.00, 2024-11-15)
+        - Utilities (Utilities, 100.00, 2024-10-30)
+        """
         self.user = User.objects.create(
             id=uuid4(),
             username="testuser",
@@ -46,6 +54,10 @@ class ExpensesSelectorTest(TestCase):
         self.assertIn(self.expense3, expenses)
 
     def test_list_expenses_by_date_range(self):
+        """
+        Tests that list_expenses_by_date_range returns the correct expenses for a
+        given user within a specific date range.
+        """
         expenses = ExpensesSelector.list_expenses_by_date_range(
             user_id=self.user.id, start_date="2024-11-01", end_date="2024-11-30"
         )
@@ -55,6 +67,16 @@ class ExpensesSelectorTest(TestCase):
         self.assertNotIn(self.expense3, expenses)
 
     def test_get_category_summary(self):
+        """
+        Tests that get_category_summary returns the expected results.
+
+        This test verifies that:
+
+        - The method returns a QuerySet with two items.
+        - The two items have category "Food" and "Travel".
+        - The total amount for the "Food" category is 50.00.
+        - The total amount for the "Travel" category is 20.00.
+        """
         summary = ExpensesSelector.get_category_summary(user_id=self.user.id, month=11)
         self.assertEqual(len(summary), 2)
         food_summary = next((s for s in summary if s["category"] == "Food"), None)
