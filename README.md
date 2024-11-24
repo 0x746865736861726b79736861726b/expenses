@@ -17,6 +17,8 @@ Run migrations:
 
 ## Expenses API
 
+**You can use raw api or via swagger (/docs/)**
+
 ### `GET /api/`
 Retrieve a list of all expenses.
 
@@ -283,5 +285,3 @@ Content-Type: application/json
 
  - 400 Bad Request — Invalid request parameters or validation errors.
  - 404 Not Found — User or expense category not found.
-
- ## Or via swagger endpoint `/docs/`
