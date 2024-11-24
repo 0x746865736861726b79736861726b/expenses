@@ -14,8 +14,21 @@ Run migrations:
 
     $ docker-compose.yml run web poetry run apps/manage.py migrate
 
+For using seeded data for database entityes you can use:
+
+    docker-compose run web poetry run python apps/manage.py loaddata apps/users/fixtures/users.json
+    docker-compose run web poetry run python apps/manage.py loaddata apps/expenses/fixtures/expenses.json 
+
+If you want mannyaly add superuser and edit some data like add new users
+
+    docker-compose run web poetry run python apps/manage.py createsuperuser
+
+then you can access admin dashboard 0.0.0.0:8000/admin
 
 ## Expenses API
+#### Swagger 0.0.0.0:8000/docs/
+#### Raw API documented here
+**You can use raw api or via swagger (/docs/)**
 
 ### `GET /api/`
 Retrieve a list of all expenses.
@@ -283,5 +296,3 @@ Content-Type: application/json
 
  - 400 Bad Request — Invalid request parameters or validation errors.
  - 404 Not Found — User or expense category not found.
-
- ## Or via swagger endpoint `/docs/`
