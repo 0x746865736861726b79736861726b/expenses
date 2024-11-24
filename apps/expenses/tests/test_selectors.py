@@ -47,6 +47,12 @@ class ExpensesSelectorTest(TestCase):
         )
 
     def test_list_expenses_by_user(self):
+        """
+        Tests that list_expenses_by_user returns all expenses for a given user.
+
+        The user created in setUp has three expenses. This test ensures that
+        list_expenses_by_user returns a QuerySet with all three expenses.
+        """
         expenses = ExpensesSelector.list_expenses_by_user(user_id=self.user.id)
         self.assertEqual(expenses.count(), 3)
         self.assertIn(self.expense1, expenses)
