@@ -14,6 +14,11 @@ Run migrations:
 
     $ docker-compose.yml run web poetry run apps/manage.py migrate
 
+Run unittests:
+
+    $ docker-compose.yml run web poetry run apps/manage.py tests expenses
+    $ docker-compose.yml run web petry run apps/manage.py tests users
+
 For using seeded data for database entityes you can use:
 
     docker-compose run web poetry run python apps/manage.py loaddata apps/users/fixtures/users.json
