@@ -73,7 +73,7 @@ GET /api/
 - 400 Bad Request — Invalid query parameters or filters.
 - 500 Internal Server Error — Unexpected error on the server.
 
-### POST /api/expenses/
+### `POST /api/`
 
 Create a new expense.
 ### Description:
@@ -108,7 +108,7 @@ This endpoint allows you to create a new expense.
  - 400 Bad Request — Invalid or missing fields in the request.
  - 422 Unprocessable Entity — Validation errors.
 
-### `GET /api/expenses/{id}/`
+### `GET /api/{id}/`
 
 Retrieve a single expense by its ID.
 ### Description:
@@ -133,7 +133,7 @@ GET /api/expenses/23e4567-e89b-12d3-a456-426614174000/
 #### Possible Errors:
  - 404 Not Found — Expense with the given ID does not exist.
 
-### `PUT /api/expenses/{id}/`
+### `PUT /api/{id}/`
 
 Update an existing expense by its ID.
 ### Description:
@@ -167,7 +167,7 @@ This endpoint allows you to update an existing expense.
  - 400 Bad Request — Invalid or missing fields in the request.
  - 404 Not Found — Expense with the given ID does not exist.
 
-### `PATCH /api/expenses/{id}/`
+### `PATCH /api/{id}/`
 
 Partially update an existing expense by its ID.
 ### Description:
