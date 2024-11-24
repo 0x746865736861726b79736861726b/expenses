@@ -1,0 +1,82 @@
+[
+    {
+        "model": "users.user",
+        "pk": "5f4e8a2b-53f5-4fe9-bf63-3ed9e8a871e0",
+        "fields": {
+            "email": "john.doe@example.com",
+            "username": "johndoe"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "b9274a8e-5a32-42b3-9a30-9cde54718aeb",
+        "fields": {
+            "email": "jane.smith@example.com",
+            "username": "janesmith"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "6d1b3c4b-c1d7-4d97-b8c1-bc9c6f14b29f",
+        "fields": {
+            "email": "alex.lee@example.com",
+            "username": "alexlee"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "f43f3761-d4eb-4f74-9e65-b076fddebb93",
+        "fields": {
+            "email": "emily.jones@example.com",
+            "username": "emilyjones"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "e7cb2902-bac1-4f5b-b0ac-d784b9e19f7f",
+        "fields": {
+            "email": "michael.brown@example.com",
+            "username": "michaelbrown"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "14ed89b1-f4de-4dff-9c02-fcb67ca3b570",
+        "fields": {
+            "email": "sarah.white@example.com",
+            "username": "sarahwhite"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "bbc87d6d-3c3c-44fc-8bfb-0e903d6a4b87",
+        "fields": {
+            "email": "james.green@example.com",
+            "username": "jamesgreen"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "cb43dce2-2c30-460b-b9cd-e9d86cf22690",
+        "fields": {
+            "email": "kate.miller@example.com",
+            "username": "katemiller"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "f2e2406f-05f3-4640-9ccf-39bff20a1f77",
+        "fields": {
+            "email": "david.white@example.com",
+            "username": "davidwhite"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": "3b1e9a29-e7cc-4fd4-b3ad-72db7e6f8f13",
+        "fields": {
+            "email": "anna.wilson@example.com",
+            "username": "annawilson"
+        }
+    }
+]
