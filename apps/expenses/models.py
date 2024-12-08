@@ -13,7 +13,7 @@ class Expenses(BaseModel):
     ]
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.PositiveIntegerField(default=0)
     date = models.DateField()
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
 
@@ -24,7 +24,3 @@ class Expenses(BaseModel):
 
     def __str__(self):
         return f"{self.title} - {self.amount} ({self.category})"
-
-    def clean(self):
-        if self.amount <= 0:
-            raise ValidationError(_("Expense amount must be positive"))

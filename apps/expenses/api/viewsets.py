@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 from ..models import Expenses
+from ..filters import ExpensesFilter
 from .serializers import (
     ExpensesSerializer,
     ExpenseFilterSerializer,
@@ -17,51 +18,40 @@ class ExpensesViewSet(ModelViewSet):
     queryset = Expenses.objects.select_related("user").all()
     serializer_class = ExpensesSerializer
     permission_classes = [AllowAny]
+    filterset_class = ExpensesFilter
 
-    def get_serializer_class(self):
+    def get_queryset(self):
         """
-        Return the serializer class for the given action.
-
-        Depending on the action, returns the class of the serializer to use.
-
-        :return: The serializer class to use.
+        Optionally restricts the returned expenses to a user-filtered query,
+        by filtering against query parameters in the request.
         """
-        if self.action == "filter_expenses":
-            return ExpenseFilterSerializer
-        elif self.action == "summary":
-            return ExpensesSummarySerializer
-        return super().get_serializer_class()
+        queryset = super().get_queryset()
+        return queryset
 
-    @action(detail=False, methods=["post"], url_path="filter")
-    def filter_expenses(self, request):
+    def list(self, request, *args, **kwargs):
         """
-        Filter expenses by user_id and date range.
-
-        Args:
-            request (Request): request object
-
-        Returns:
-            Response: response object with filtered expenses
+        Overrides the default `list` method to apply filtering and optionally provide summaries.
         """
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            expenses = serializer.get_expenses()
-            return Response(ExpensesSerializer(expenses, many=True).data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if request.query_params.get("summary"):
+            serializer = ExpensesSummaryResponseSerializer(
+                self.get_summary_data(), many=True
+            )
+            return Response(serializer.data)
+        return super().list(request, *args, **kwargs)
 
-    @action(detail=False, methods=["post"], url_path="summary")
-    def summary(self, request):
-        """
-        Get the total expenses per category for a user in a given month.
+    # @action(detail=False, methods=["post"], url_path="summary")
+    # def summary(self, request):
+    #     """
+    #     Get the total expenses per category for a user in a given month.
 
-        Args:
-            request (Request): request object
+    #     Args:
+    #         request (Request): request object
 
-        Returns:
-            Response: response object with total expenses per category
-        """
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            summary = serializer.get_summary()
-            return Response(ExpensesSummaryResponseSerializer(summary, many=True).data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     Returns:
+    #         Response: response object with total expenses per category
+    #     """
+    #     serializer = self.get_serializer(data=request.data)
+    #     if serializer.is_valid():
+    #         summary = serializer.get_summary()
+    #         return Response(ExpensesSummaryResponseSerializer(summary, many=True).data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
