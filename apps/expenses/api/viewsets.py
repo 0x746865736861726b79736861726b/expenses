@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status, serializers
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -6,9 +6,9 @@ from rest_framework.permissions import AllowAny
 
 from ..models import Expenses
 from ..filters import ExpensesFilter
+from ..selectors.expenses import ExpensesSelector
 from .serializers import (
     ExpensesSerializer,
-    ExpenseFilterSerializer,
     ExpensesSummarySerializer,
     ExpensesSummaryResponseSerializer,
 )
@@ -39,19 +39,18 @@ class ExpensesViewSet(ModelViewSet):
             return Response(serializer.data)
         return super().list(request, *args, **kwargs)
 
-    # @action(detail=False, methods=["post"], url_path="summary")
-    # def summary(self, request):
-    #     """
-    #     Get the total expenses per category for a user in a given month.
+    def get_summary_data(self):
+        """
+        Retrieve summary data (total expenses per category) for a user in a specified month.
+        """
+        user_id = self.request.query_params.get("user_id")
+        month = self.request.query_params.get("month")
 
-    #     Args:
-    #         request (Request): request object
+        if not user_id or not month:
+            raise serializers.ValidationError(
+                {
+                    "error": "Both 'user_id' and 'month' query parameters are required for a summary."
+                }
+            )
 
-    #     Returns:
-    #         Response: response object with total expenses per category
-    #     """
-    #     serializer = self.get_serializer(data=request.data)
-    #     if serializer.is_valid():
-    #         summary = serializer.get_summary()
-    #         return Response(ExpensesSummaryResponseSerializer(summary, many=True).data)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return ExpensesSelector.get_category_summary(user_id=user_id, month=month)
